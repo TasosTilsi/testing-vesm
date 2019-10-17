@@ -1,73 +1,73 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite thread-count="1" verbose="1" name="TS_VESM_UI" annotations="JDK" parallel="tests">
-    <test name="TC_VESM_UI_LGN_001_VerifyLoginPage">
+    <test name="TC_VESM_UI_001_VerifyPageLoaded">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_001_VerifyPageLoaded"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_001_VerifyPageLoaded"/>
         </classes>
     </test>
 
     <test name="TC_VESM_UI_002_VerifyAboutModal">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_002_VerifyAboutModal"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_002_VerifyAboutModal"/>
         </classes>
     </test>
 
     <test name="TC_VESM_UI_003_SettingsVerify">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_003_SettingsVerify"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_003_SettingsVerify"/>
         </classes>
     </test>
 
     <test name="TC_VESM_UI_004_GenerateNumbersWithoutInputs">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_004_GenerateNumbersWithoutInputs"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_004_GenerateNumbersWithoutInputs"/>
         </classes>
     </test>
 
     <test name="TC_VESM_UI_005_SliderChangeValue">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_005_SliderChangeValue"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_005_SliderChangeValue"/>
         </classes>
     </test>
 
     <test name="TC_VESM_UI_006_MakeLinearSearch">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_006_MakeLinearSearch"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_006_MakeLinearSearch"/>
         </classes>
     </test>
 
     <test name="TC_VESM_UI_007_MakeBinarySearch">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_007_MakeBinarySearch"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_007_MakeBinarySearch"/>
         </classes>
     </test>
 
 
     <test name="TC_VESM_UI_008_MakeJumpSearch">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_008_MakeJumpSearch"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_008_MakeJumpSearch"/>
         </classes>
     </test>
 
 
     <test name="TC_VESM_UI_009_MakeInterpolationSearch">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_009_MakeInterpolationSearch"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_009_MakeInterpolationSearch"/>
         </classes>
     </test>
 
 
     <test name="TC_VESM_UI_010_MakeExponentialSearch">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_010_MakeExponentialSearch"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_010_MakeExponentialSearch"/>
         </classes>
     </test>
 
 
     <test name="TC_VESM_UI_011_MakeFibonacciSearch">
         <classes>
-            <class name="com.intrasoft.stsc.test_cases.TC_VESM_UI_011_MakeFibonacciSearch"/>
+            <class name="tasostilsi.testing.vesm.test_cases.TC_VESM_UI_011_MakeFibonacciSearch"/>
         </classes>
     </test>
 
