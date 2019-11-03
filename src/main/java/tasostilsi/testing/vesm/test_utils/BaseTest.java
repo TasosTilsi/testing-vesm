@@ -31,10 +31,10 @@ public class BaseTest {
     private FirefoxOptions foptions;
     private ChromeOptions coptions;
 
-    @BeforeSuite
+/*    @BeforeSuite
     public void setPreferences() {
         // open browser and application url
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/main/resources/drivers/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/main/resources/drivers/"+getOS()+"/chromedriver.exe");
 //        System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "/src/main/resources/drivers/geckodriver.exe");
 
         coptions = new ChromeOptions();
@@ -43,13 +43,23 @@ public class BaseTest {
 //        foptions = new FirefoxOptions();
 //        foptions.setBinary(System.getProperty("user.dir") + "/src/main/resources/binaries/firefox_portable/App/Firefox/firefox.exe");
 
-    }
+    }*/
 
     /**
      * This method runs before every test case runs and sets up the driver
      */
     @BeforeTest
     public void setUp() {
+        // open browser and application url
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/main/resources/drivers/"+getOS()+"/chromedriver.exe");
+//        System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "/src/main/resources/drivers/geckodriver.exe");
+
+        coptions = new ChromeOptions();
+        coptions.setBinary(System.getProperty("user.dir") + "/src/main/resources/binaries/"+getOS()+"/chrome_portable/chrome.exe");
+
+//        foptions = new FirefoxOptions();
+//        foptions.setBinary(System.getProperty("user.dir") + "/src/main/resources/binaries/firefox_portable/App/Firefox/firefox.exe");
+
 
         // create a new chrome driver
         driver = new ChromeDriver(coptions);
@@ -81,6 +91,19 @@ public class BaseTest {
     @AfterSuite
     public void clearAllDriverTasks() {
         killProcesses();
+    }
+
+    public String getOS(){
+        String osName = System.getProperty("os.name").toLowerCase();
+        System.out.println(osName);
+        if (osName.contains("windows")){
+            return "windows";
+        }else if(osName.contains("nux") || osName.contains("nix")){
+            return "unix";
+        }else{
+            System.out.println("The test is not implemented to run on this OS");
+            return "not implemented";
+        }
     }
 
     /**
