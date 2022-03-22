@@ -1,23 +1,19 @@
 package tasostilsi.testing.vesm.test_utils;
 
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
 import java.io.BufferedReader;
@@ -28,22 +24,7 @@ public class BaseTest {
 
     public WebDriver driver;
     private WebDriverWait wait;
-    private FirefoxOptions foptions;
     private ChromeOptions coptions;
-
-/*    @BeforeSuite
-    public void setPreferences() {
-        // open browser and application url
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/main/resources/drivers/"+getOS()+"/chromedriver.exe");
-//        System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "/src/main/resources/drivers/geckodriver.exe");
-
-        coptions = new ChromeOptions();
-        coptions.setBinary(System.getProperty("user.dir") + "/src/main/resources/binaries/chrome_portable/chrome.exe");
-
-//        foptions = new FirefoxOptions();
-//        foptions.setBinary(System.getProperty("user.dir") + "/src/main/resources/binaries/firefox_portable/App/Firefox/firefox.exe");
-
-    }*/
 
     /**
      * This method runs before every test case runs and sets up the driver
@@ -51,19 +32,19 @@ public class BaseTest {
     @BeforeTest
     public void setUp() {
         // open browser and application url
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/main/resources/drivers/"+getOS()+"/chromedriver.exe");
-//        System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "/src/main/resources/drivers/geckodriver.exe");
+        if (getOS().equalsIgnoreCase("windows")) {
+            WebDriverManager.chromedriver().setup();
+        } else {
+            WebDriverManager.chromedriver().linux().setup();
+        }
 
         coptions = new ChromeOptions();
-        coptions.setBinary(System.getProperty("user.dir") + "/src/main/resources/binaries/"+getOS()+"/chrome_portable/chrome.exe");
-
-//        foptions = new FirefoxOptions();
-//        foptions.setBinary(System.getProperty("user.dir") + "/src/main/resources/binaries/firefox_portable/App/Firefox/firefox.exe");
-
+        coptions.addArguments("--allowed-ips");
+//        coptions.addArguments("--headless");
+        coptions.addArguments("--no-sandbox", "--disable-dev-shm-usage");
 
         // create a new chrome driver
         driver = new ChromeDriver(coptions);
-//        driver = new FirefoxDriver(foptions);
 
         //navigate to web app
         driver.get("https://tasostilsi.github.io/VESM");
@@ -93,14 +74,14 @@ public class BaseTest {
         killProcesses();
     }
 
-    public String getOS(){
+    public String getOS() {
         String osName = System.getProperty("os.name").toLowerCase();
-        System.out.println(osName);
-        if (osName.contains("windows")){
+//        System.out.println(osName);
+        if (osName.contains("windows")) {
             return "windows";
-        }else if(osName.contains("nux") || osName.contains("nix")){
+        } else if (osName.contains("nux") || osName.contains("nix")) {
             return "unix";
-        }else{
+        } else {
             System.out.println("The test is not implemented to run on this OS");
             return "not implemented";
         }
@@ -113,8 +94,7 @@ public class BaseTest {
      */
     public void waitForLoad(final WebDriver driver) {
         ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
-            @NullableDecl
-            public Boolean apply(@NullableDecl WebDriver input) {
+            public Boolean apply(WebDriver input) {
                 return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
             }
         };
@@ -226,35 +206,37 @@ public class BaseTest {
      * With this method we kill the processes and the browsers from the drivers that are open
      */
     private void killProcesses() {
-        String path = System.getProperty("user.dir") + "/src/main/resources/cleanup-opened-drivers.bat";
-        ProcessBuilder processBuilder = new ProcessBuilder(path);
+        if (getOS().equalsIgnoreCase("windows")) {
+            String path = System.getProperty("user.dir") + "/src/main/resources/cleanup-opened-drivers.bat";
+            ProcessBuilder processBuilder = new ProcessBuilder(path);
 
-        try {
+            try {
 
-            Process process = processBuilder.start();
+                Process process = processBuilder.start();
 
-            StringBuilder output = new StringBuilder();
+                StringBuilder output = new StringBuilder();
 
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream()));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line + "\n");
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line + "\n");
+                }
+
+                int exitVal = process.waitFor();
+                if (exitVal == 0) {
+                    System.out.println(output);
+                    System.exit(0);
+                } else {
+                    //abnormal...
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
-            int exitVal = process.waitFor();
-            if (exitVal == 0) {
-                System.out.println(output);
-                System.exit(0);
-            } else {
-                //abnormal...
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 

@@ -10,7 +10,7 @@
 
     <properties>
         <!--        Third party, public Libraries   -->
-        <selenium.version>3.141.59</selenium.version>
+        <selenium.version>4.1.0</selenium.version>
         <testNg.version>6.9.10</testNg.version>
     </properties>
 
@@ -21,12 +21,28 @@
             <version>${selenium.version}</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.seleniumhq.selenium</groupId>-->
+<!--            <artifactId>selenium-firefox-driver</artifactId>-->
+<!--            <version>3.0.1</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testNg.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.0.3</version>
+        </dependency>
+
+
+
     </dependencies>
 
 

@@ -5,3 +5,4 @@
 /src/main/resources/binaries/windows/firefox_portable/
 /src/main/resources/binaries/unix/firefox_portable/
 /src/main/resources/binaries/unix/chrome_portable/
+/*.iml
